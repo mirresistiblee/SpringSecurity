@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Spring Security</title>
+    <style>
+        /* Общие стили для страницы */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Контейнер формы */
+        form {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 300px;
+            text-align: center;
+        }
+
+        /* Заголовок */
+        h2 {
+            margin-bottom: 20px;
+            color: #333333;
+        }
+
+        /* Поля ввода */
+        input[type="text"],
+        input[type="password"] {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        /* Кнопка отправки */
+        input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        /* Сообщение об ошибке */
+        p {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        p[style] {
+            color: red;
+        }
+
+        /* Ссылка на регистрацию */
+        .register-link {
+            margin-top: 15px;
+            display: block;
+            color: #007bff;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .register-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Форма входа -->
+<form th:action="@{/login}" method="post">
+    <h2>Login</h2>
+
+    <!-- Поле для имени пользователя -->
+    <div><label> User Name: <input type="text" name="username" required/> </label></div>
+
+    <!-- Поле для пароля -->
+    <div><label> Password: <input type="password" name="password" required/> </label></div>
+
+    <!-- Защита от CSRF атак -->
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+    <div th:if="${param.error}">
+        <p style="color: red;">Invalid credentials. Please try again.</p>
+    </div>
+
+    <!-- Кнопка отправки формы -->
+    <div><input type="submit" value="Sign In"/></div>
+
+    <!-- Ссылка на регистрацию -->
+    <a class="register-link" href="register">Create New Account</a>
+</form>
+
+</body>
+</html>

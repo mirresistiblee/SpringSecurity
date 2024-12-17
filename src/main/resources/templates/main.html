@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Список сообщений</title>
+    <style>
+        /* Общие стили для страницы */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* Кнопка выхода */
+        form {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        /* Общий стиль форм */
+        form div {
+            margin-bottom: 5px;
+        }
+
+        form input[type="text"] {
+            width: calc(100% - 5px);
+            padding: 5px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        form button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background-color: #218838;
+        }
+
+        /* Список сообщений */
+        .message {
+            margin-bottom: 5px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .message b {
+            font-size: 5px;
+            color: #333;
+        }
+
+        .message .tag {
+            font-style: italic;
+            color: #666;
+        }
+
+        /* Стиль заголовков */
+        h1, h2, h3 {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Выход из системы -->
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
+
+<!-- Форма для добавления сообщения -->
+<div>
+    <form method="post" th:action="@{/main}">
+        <input type="text" name="text" placeholder="Введите сообщение" required />
+        <input type="text" name="tag" placeholder="Тэг" />
+        <button type="submit">Добавить</button>
+    </form>
+</div>
+
+<!-- Форма для фильтрации сообщений -->
+<div>
+    <form method="get" th:action="@{/filter}">
+        <input type="text" name="filter" placeholder="Введите фильтр" />
+        <button type="submit">Найти</button>
+    </form>
+</div>
+
+<!-- Отображение списка сообщений -->
+<div th:each="message : ${messages}" class="message">
+    <b th:text="${message.id}"></b><br/>
+    <span th:text="${message.text}"></span><br/>
+    <span class="tag" th:text="${message.tag}"></span>
+</div>
+
+</body>
+</html>
